@@ -10,7 +10,7 @@ namespace TouristHotspot.Core.Repositories
     public interface ITourSpotRepository
     {
         Task<List<TourSpot>> GetAllAsync();
-        Task<List<TourSpot>> GetByIdAsync(int id);
-        Task<List<TourSpot>> Create(TourSpot tourSpot);
+        Task <TourSpot> GetByIdAsync(int id);
+        Task Create(TourSpot tourSpot);
     }
 }
