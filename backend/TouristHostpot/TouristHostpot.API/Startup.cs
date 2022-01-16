@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -5,7 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using TouristHotspot.Application.Commands.CreateTourSpot;
+using TouristHotspot.Core.Repositories;
 using TouristHotspot.Infrastructure.Persistence;
+using TouristHotspot.Infrastructure.Persistence.Repositories;
 
 namespace TouristHostpot.API
 {
@@ -24,7 +28,11 @@ namespace TouristHostpot.API
             var connectionString = Configuration.GetConnectionString("TouristHotspotCs");
             services.AddDbContext<TouristHotspotDbContext>(options=>options.UseSqlServer(connectionString));
 
+            services.AddScoped<ITourSpotRepository, TourSpotRepository>();
+            
             services.AddControllers();
+
+            services.AddMediatR(typeof(CreateTourSpotCommand));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TouristHostpot.API", Version = "v1" });
