@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,7 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using TouristHostpot.API.Filter;
 using TouristHotspot.Application.Commands.CreateTourSpot;
+using TouristHotspot.Application.Validators;
 using TouristHotspot.Core.Repositories;
 using TouristHotspot.Infrastructure.Persistence;
 using TouristHotspot.Infrastructure.Persistence.Repositories;
@@ -30,7 +33,8 @@ namespace TouristHostpot.API
 
             services.AddScoped<ITourSpotRepository, TourSpotRepository>();
             
-            services.AddControllers();
+            services.AddControllers(options=>options.Filters.Add(typeof(ValidationFilter)))
+                .AddFluentValidation(fv=>fv.RegisterValidatorsFromAssemblyContaining<CreateTourSpotCommandValidator>());
 
             services.AddMediatR(typeof(CreateTourSpotCommand));
             services.AddSwaggerGen(c =>
