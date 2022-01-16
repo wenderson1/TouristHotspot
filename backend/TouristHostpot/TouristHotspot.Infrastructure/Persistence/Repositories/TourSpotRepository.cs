@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TouristHotspot.Core.Entities;
 using TouristHotspot.Core.Repositories;
@@ -24,7 +25,7 @@ namespace TouristHotspot.Infrastructure.Persistence.Repositories
 
         public async Task<List<TourSpot>> GetAllAsync()
         {
-            return await _dbContext.TourSpots.ToListAsync();
+            return await _dbContext.TourSpots.Where(ts => ts.Status==true).ToListAsync();
         }
 
         public async Task<TourSpot> GetByIdAsync(int id)
