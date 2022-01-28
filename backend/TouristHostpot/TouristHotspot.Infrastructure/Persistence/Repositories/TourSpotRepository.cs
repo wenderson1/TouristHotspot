@@ -26,8 +26,28 @@ namespace TouristHotspot.Infrastructure.Persistence.Repositories
 
         public async Task Create(TourSpot tourSpot)
         {
+            /*
             await _dbContext.TourSpots.AddAsync(tourSpot);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();*/
+
+            using(var sqlConneection = new SqlConnection(_connectionString))
+            {
+                sqlConneection.Open();
+
+                string script = "INSERT INTO TourSpots(Name, Description, Address, City, State, Status, CreatedAt) Values (@Name, @Description, @Address, @City, @State, @Status, @CreatedAt);";
+
+                var affectedRows = await sqlConneection.ExecuteAsync(script, new
+                {
+                    Name = tourSpot.Name,
+                    Description = tourSpot.Description,
+                    Address = tourSpot.Address,
+                    City = tourSpot.City,
+                    State = tourSpot.State,
+                    Status = tourSpot.Status,
+                    CreatedAt = tourSpot.CreatedAt
+                }).ConfigureAwait(false);
+            }
+          
         }
 
         public List<TourSpotDTO> GetAll()
@@ -43,7 +63,7 @@ namespace TouristHotspot.Infrastructure.Persistence.Repositories
             }
         }
 
-        public TourSpot GetByIdAsync(int id)
+        public async Task<TourSpot> GetByIdAsync(int id)
         {
             using (var sqlConnection = new SqlConnection(_connectionString))
             {
@@ -51,7 +71,7 @@ namespace TouristHotspot.Infrastructure.Persistence.Repositories
 
                 var script = "SELECT Name, Description, Address, City, State FROM TourSpots Where Id = @id;";
 
-                var tourSpotDetails = sqlConnection.QueryFirstOrDefault<TourSpot>(script,new { id });
+                var tourSpotDetails = await sqlConnection.QueryFirstOrDefaultAsync<TourSpot>(script,new { id }).ConfigureAwait(false);
 
                 return tourSpotDetails;
             }

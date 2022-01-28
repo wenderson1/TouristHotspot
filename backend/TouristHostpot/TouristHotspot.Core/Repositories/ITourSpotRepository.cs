@@ -12,7 +12,7 @@ namespace TouristHotspot.Core.Repositories
     public interface ITourSpotRepository
     {
         List<TourSpotDTO> GetAll();
-        TourSpot GetByIdAsync(int id);
+        Task<TourSpot> GetByIdAsync(int id);
         Task Create(TourSpot tourSpot);
     }
 }

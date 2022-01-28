@@ -22,7 +22,12 @@ namespace TouristHotspot.Application.Queries.GetTourSpot
 
         public async Task<TourSpotDetailsViewModel> Handle(GetTourSpotByIdQuery request, CancellationToken cancellationToken)
         {
-            var tourSpot =  _tourSpotRepository.GetByIdAsync(request.Id);
+            var tourSpot =  await _tourSpotRepository.GetByIdAsync(request.Id);
+
+            if(tourSpot == null)
+            {
+                return null;
+            }
 
             var tourSpotDetailsViewModel = new TourSpotDetailsViewModel(tourSpot.Name, tourSpot.Description, tourSpot.Address, tourSpot.City, tourSpot.State, tourSpot.CreatedAt);
 

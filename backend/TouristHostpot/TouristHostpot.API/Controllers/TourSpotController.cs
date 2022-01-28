@@ -39,7 +39,7 @@ namespace TouristHostpot.API.Controllers
             var tourSpot = await _mediator.Send(getTourSpotByIdQuery);
 
             if (tourSpot == null)
-                return NotFound();
+                return NotFound("Id não existe");
 
             return Ok(tourSpot);
         }
