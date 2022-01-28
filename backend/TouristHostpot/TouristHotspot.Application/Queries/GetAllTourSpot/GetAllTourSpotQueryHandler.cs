@@ -19,10 +19,10 @@ namespace TouristHotspot.Application.Queries.GetAllTourSpot
 
         public async Task<List<TourSpotViewModel>> Handle(GetAllTourSpotQuery request, CancellationToken cancellationToken)
         {
-            var tourSpots = await _tourSpotRepository.GetAllAsync();
+            var tourSpots =  _tourSpotRepository.GetAll();
 
             var tourSpotsViewModel = tourSpots
-                .Select(ts => new TourSpotViewModel(ts.Id,ts.Name, ts.Description, ts.City, ts.State))
+                .Select(ts => new TourSpotViewModel(ts.Id,ts.Name, ts.City, ts.State))
                 .ToList();
 
             return tourSpotsViewModel;

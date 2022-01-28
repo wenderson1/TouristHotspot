@@ -14,7 +14,7 @@ namespace TouristHotspot.Core.Entities
         public bool Status { get; private set; }
         public List<TourSpot> TourSpots{ get; private set; }
 
-        public Localization(string address, string city, string state)
+        public Localization(int id, string address, string city, string state)
         {
             Address = address;
             City = city;

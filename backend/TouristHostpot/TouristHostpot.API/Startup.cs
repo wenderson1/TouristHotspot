@@ -32,7 +32,9 @@ namespace TouristHostpot.API
             services.AddDbContext<TouristHotspotDbContext>(options=>options.UseSqlServer(connectionString));
 
             services.AddScoped<ITourSpotRepository, TourSpotRepository>();
-            
+
+            services.AddCors();
+
             services.AddControllers(options=>options.Filters.Add(typeof(ValidationFilter)))
                 .AddFluentValidation(fv=>fv.RegisterValidatorsFromAssemblyContaining<CreateTourSpotCommandValidator>());
 
@@ -52,6 +54,10 @@ namespace TouristHostpot.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TouristHostpot.API v1"));
             }
+            app.UseCors(builder => builder
+               .AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader());
 
             app.UseHttpsRedirection();
 

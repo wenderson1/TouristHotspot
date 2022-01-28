@@ -10,8 +10,9 @@ namespace TouristHotspot.Core.Entities
         public string City { get; private set; }
         public string State { get; private set; }
         public bool Status { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-
+        public DateTime CreatedAt { get; private set; 
+        
+        }
         public TourSpot(string name, string description, string address, string city, string state)
         {
             Name = name;
@@ -21,7 +22,9 @@ namespace TouristHotspot.Core.Entities
             State = state;
             Status = true;
             CreatedAt = DateTime.Now;
-        }
+        } 
+
+        
 
         public void Deactive()
         {

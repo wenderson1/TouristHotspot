@@ -3,13 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32002.261
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouristHostpot.API", "TouristHostpot.API\TouristHostpot.API.csproj", "{5124F373-F176-4EF6-BED1-DFF89FB23C12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouristHostpot.API", "TouristHostpot.API\TouristHostpot.API.csproj", "{5124F373-F176-4EF6-BED1-DFF89FB23C12}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8623F0FE-481E-48EB-9985-A1548B7514E9} = {8623F0FE-481E-48EB-9985-A1548B7514E9}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouristHotspot.Application", "TouristHotspot.Application\TouristHotspot.Application.csproj", "{B9B13D71-4887-409F-8B37-620FC1120654}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouristHotspot.Application", "TouristHotspot.Application\TouristHotspot.Application.csproj", "{B9B13D71-4887-409F-8B37-620FC1120654}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouristHotspot.Core", "TouristHotspot.Core\TouristHotspot.Core.csproj", "{8623F0FE-481E-48EB-9985-A1548B7514E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouristHotspot.Core", "TouristHotspot.Core\TouristHotspot.Core.csproj", "{8623F0FE-481E-48EB-9985-A1548B7514E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouristHotspot.Infrastructure", "TouristHotspot.Infrastructure\TouristHotspot.Infrastructure.csproj", "{DCB1920D-65F7-494A-8F79-061AB75D8528}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouristHotspot.Infrastructure", "TouristHotspot.Infrastructure\TouristHotspot.Infrastructure.csproj", "{DCB1920D-65F7-494A-8F79-061AB75D8528}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

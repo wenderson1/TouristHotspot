@@ -1,8 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TouristHotspot.Application.ViewModels;
+using TouristHotspot.Core.DTOs;
 using TouristHotspot.Core.Entities;
 using TouristHotspot.Core.Repositories;
 
@@ -11,10 +16,12 @@ namespace TouristHotspot.Infrastructure.Persistence.Repositories
     public class TourSpotRepository : ITourSpotRepository
     {
         private readonly TouristHotspotDbContext _dbContext;
+        private readonly string _connectionString;
 
-        public TourSpotRepository(TouristHotspotDbContext dbContext)
+        public TourSpotRepository(TouristHotspotDbContext dbContext, IConfiguration configuration)
         {
             _dbContext = dbContext;
+            _connectionString = configuration.GetConnectionString("TouristHotspotCs");
         }
 
         public async Task Create(TourSpot tourSpot)
@@ -23,14 +30,31 @@ namespace TouristHotspot.Infrastructure.Persistence.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<List<TourSpot>> GetAllAsync()
+        public List<TourSpotDTO> GetAll()
         {
-            return await _dbContext.TourSpots.Where(ts => ts.Status==true).ToListAsync();
+            
+            using (var sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+
+                var script = "SELECT Id, Name, Description, Address, City, State FROM TourSpots Where Status = 1";
+
+                return sqlConnection.Query<TourSpotDTO>(script).ToList();
+            }
         }
 
-        public async Task<TourSpot> GetByIdAsync(int id)
+        public TourSpot GetByIdAsync(int id)
         {
-            return await _dbContext.TourSpots.SingleOrDefaultAsync(p => p.Id == id);
+            using (var sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+
+                var script = "SELECT Name, Description, Address, City, State FROM TourSpots Where Id = @id;";
+
+                var tourSpotDetails = sqlConnection.QueryFirstOrDefault<TourSpot>(script,new { id });
+
+                return tourSpotDetails;
+            }
         }
     }
 }
